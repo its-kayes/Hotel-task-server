@@ -21,7 +21,7 @@ async function run() {
         let reviewsCollection = client.db("hotels_details").collection("reviews");
 
         app.get('/hotels', async (req, res) => {
-            res.send(await hotelCollection.find(query).toArray());
+            res.send(await hotelCollection.find({}).toArray());
         });
 
         app.get('/hotel/:id', async(req, res)=> {
