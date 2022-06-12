@@ -18,6 +18,7 @@ async function run() {
     try {
         await client.connect();
         let hotelCollection = client.db("hotels_details").collection("all_hotels");
+        let reviewsCollection = client.db("hotels_details").collection("reviews");
 
         app.get('/hotels', async (req, res) => {
             let query = {}
@@ -33,6 +34,12 @@ async function run() {
             let query = {_id: ObjectId(id)};
             let data = await hotelCollection.findOne(query);
             res.send(data);
+        })
+
+        app.post('/review', async(req, res)=> {
+            let data = req.body;
+            let result = await reviewsCollection.insertOne(data);
+            res.send(result);
         })
 
     }
