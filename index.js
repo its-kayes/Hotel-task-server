@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -26,6 +26,14 @@ async function run() {
             // res.send('kaj kore');
             res.send(result);
         });
+
+        app.get('/hotel/:id', async(req, res)=> {
+            let id = req.params.id;
+            // let id = ObjectId(_id)
+            let query = {_id: ObjectId(id)};
+            let data = await hotelCollection.findOne(query);
+            res.send(data);
+        })
 
     }
 
