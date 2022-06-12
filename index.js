@@ -21,26 +21,25 @@ async function run() {
         let reviewsCollection = client.db("hotels_details").collection("reviews");
 
         app.get('/hotels', async (req, res) => {
-            let query = {}
-            // let data = await projectsCollection.find(query).toArray();
-            let result = await hotelCollection.find(query).toArray();
-            // res.send('kaj kore');
-            res.send(result);
+            res.send(await hotelCollection.find(query).toArray());
         });
 
         app.get('/hotel/:id', async(req, res)=> {
             let id = req.params.id;
-            // let id = ObjectId(_id)
             let query = {_id: ObjectId(id)};
             let data = await hotelCollection.findOne(query);
             res.send(data);
-        })
+        });
 
         app.post('/review', async(req, res)=> {
             let data = req.body;
             let result = await reviewsCollection.insertOne(data);
             res.send(result);
-        })
+        });
+
+        app.get('/reviews',async(req, res)=> {
+            res.send(await reviewsCollection.find({}).toArray()); 
+        });
 
     }
 
